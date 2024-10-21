@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про студента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .student-info {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .task-title {
+            font-size: 28px;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Лабораторна робота</h1>
+    <p>Це сторінка, де відображається інформація про студента.</p>
+
+    
+    <div class="student-info" id="studentName"></div>
+
+    
+    <button onclick="showDetails()">Показати дату та місце народження</button>
+
+    
+    <h2 class="task-title">Завдання 5: Обчислення суми ряду</h2>
+
+    
+    <label for="xValue">Введіть значення x:</label>
+    <input type="number" id="xValue">
+
+    <label for="yValue">Введіть значення y:</label>
+    <input type="number" id="yValue">
+
+    
+    <button onclick="calculateSum()">Розрахувати суму ряду</button>
+
+    
+    <p id="sumResult" class="result"></p>
+
+    <script>
+        
+        const surname = "Маковійчук";
+        const name = "Михайло";
+        const middleName = "Павлович";
+
+        
+        document.getElementById("studentName").innerHTML = `Студент: ${surname} ${name} ${middleName}`;
+
+        
+        function showDetails() {
+            const birthDate = "19 серпня 2005 року";
+            const birthPlace = "м. Івано-Франківськ, Україна";
+            alert(`Дата народження: ${birthDate}\nМісце народження: ${birthPlace}`);
+        }
+
+        
+        function factorial(n) {
+            if (n === 0 || n === 1) {
+                return 1;
+            }
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+
+        
+        function calculateSum() {
+            let x = parseFloat(document.getElementById("xValue").value);
+            let y = parseFloat(document.getElementById("yValue").value);
+            let sum = 0;
+
+            for (let i = 3; i <= 5; i++) {
+                let numerator = 3 * x * y - x;
+                let denominator = 2 * y * factorial(i + x);
+                let term = Math.pow(-1, i) * (numerator / denominator);
+                sum += term;
+            }
+
+            document.getElementById("sumResult").innerHTML = `Результат: Сума ряду = ${sum.toFixed(6)}`;
+        }
+    </script>
+
+</body>
+</html>

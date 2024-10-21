@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перевірка введених даних</title>
+    <style>
+        .input-container {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .input-container input {
+            padding: 8px;
+            border: 2px solid #ccc;
+            width: 300px;
+        }
+
+        .valid {
+            border-color: green;
+        }
+
+        .invalid {
+            border-color: red;
+        }
+
+        .feedback {
+            color: red;
+            font-size: 12px;
+            position: absolute;
+            left: 320px;
+            top: 8px;
+        }
+
+        .success {
+            color: green;
+            font-size: 16px;
+            position: absolute;
+            left: 320px;
+            top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Форма реєстрації</h1>
+    <form id="registrationForm">
+        <div class="input-container">
+            <label for="email">E-mail:</label><br>
+            <input type="text" id="email" name="email">
+            <span class="feedback" id="emailFeedback"></span>
+        </div>
+        <div class="input-container">
+            <label for="name">Ім’я та прізвище:</label><br>
+            <input type="text" id="name" name="name">
+            <span class="feedback" id="nameFeedback"></span>
+        </div>
+        <div class="input-container">
+            <label for="login">Логін:</label><br>
+            <input type="text" id="login" name="login">
+            <span class="feedback" id="loginFeedback"></span>
+        </div>
+        <div class="input-container">
+            <label for="password">Пароль:</label><br>
+            <input type="password" id="password" name="password">
+            <span class="feedback" id="passwordFeedback"></span>
+        </div>
+        <div class="input-container">
+            <label for="postalCode">Поштовий індекс:</label><br>
+            <input type="text" id="postalCode" name="postalCode">
+            <span class="feedback" id="postalCodeFeedback"></span>
+        </div>
+        <button type="button" onclick="validateForm()">Перевірити</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            
+            let email = document.getElementById("email");
+            let name = document.getElementById("name");
+            let login = document.getElementById("login");
+            let password = document.getElementById("password");
+            let postalCode = document.getElementById("postalCode");
+
+            
+            let emailPattern = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
+            let namePattern = /^[A-ZА-Я][a-zа-я]*\s[A-ZА-Я][a-zа-я]*$/;
+            let loginPattern = /^[a-zA-Z0-9]+$/;
+            let passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[-!@#$%^&*_]).{8,}$/;
+            let postalCodePattern = /^\d{5}$/;
+
+            
+            checkField(email, emailPattern, "E-mail повинен містити @pnu.edu.ua");
+            checkField(name, namePattern, "Ім’я та прізвище: Перша буква велика, лише літери");
+            checkField(login, loginPattern, "Логін повинен містити лише латинські літери");
+            checkField(password, passwordPattern, "Пароль: мінімум 8 символів, літера, цифра і спецсимвол");
+            checkField(postalCode, postalCodePattern, "Поштовий індекс має складатись з 5 цифр");
+        }
+
+        
+        function checkField(inputElement, pattern, errorMessage) {
+            let feedback = document.getElementById(inputElement.id + "Feedback");
+
+            if (pattern.test(inputElement.value)) {
+                inputElement.classList.remove("invalid");
+                inputElement.classList.add("valid");
+                feedback.textContent = "✔";
+                feedback.classList.remove("feedback");
+                feedback.classList.add("success");
+            } else {
+                inputElement.classList.remove("valid");
+                inputElement.classList.add("invalid");
+                feedback.textContent = errorMessage;
+                feedback.classList.remove("success");
+                feedback.classList.add("feedback");
+            }
+        }
+    </script>
+
+</body>
+</html>

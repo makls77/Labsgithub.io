@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про товари</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label, select, button {
+            font-size: 16px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Інформація про товари</h1>
+
+    
+    <label for="productSelect">Виберіть товар:</label>
+    <select id="productSelect">
+        <option value="" disabled selected>Оберіть товар...</option>
+    </select>
+
+   
+    <button onclick="fun1()">Наявна кількість і вартість</button>
+
+   
+    <p id="quantityResult" class="result"></p>
+    <p id="priceResult" class="result"></p>
+
+    
+    <button onclick="fun2()">Загальна сума</button>
+
+   
+    <p id="totalResult" class="result"></p>
+
+    <script>
+        
+        const products = ["Молоко", "Мандарини", "Масло", "Мед", "М'ясо"];
+        const quantities = [20, 50, 30, 15, 10]; 
+        const prices = [30, 45, 60, 100, 120];   
+
+        let selectedProductIndex = -1;  
+
+        
+        const productSelect = document.getElementById("productSelect");
+        products.forEach((product, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.text = product;
+            productSelect.add(option);
+        });
+
+        
+        function fun1() {
+            const selectedIndex = document.getElementById("productSelect").value;
+            if (selectedIndex !== "") {
+                selectedProductIndex = parseInt(selectedIndex);
+                document.getElementById("quantityResult").innerHTML = `Кількість на складі: ${quantities[selectedProductIndex]} шт.`;
+                document.getElementById("priceResult").innerHTML = `Ціна за одиницю: ${prices[selectedProductIndex]} грн.`;
+            } else {
+                document.getElementById("quantityResult").innerHTML = `Будь ласка, оберіть товар.`;
+                document.getElementById("priceResult").innerHTML = ``;
+            }
+        }
+
+        
+        function fun2() {
+            if (selectedProductIndex !== -1) {
+                const total = quantities[selectedProductIndex] * prices[selectedProductIndex];
+                document.getElementById("totalResult").innerHTML = `Загальна сума: ${total} грн.`;
+            } else {
+                document.getElementById("totalResult").innerHTML = `Будь ласка, спочатку виберіть товар.`;
+            }
+        }
+    </script>
+
+</body>
+</html>

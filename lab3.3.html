@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екранна клавіатура з перемиканням розкладки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .keyboard {
+            margin-top: 20px;
+        }
+
+        .keyboard-row {
+            margin-bottom: 10px;
+        }
+
+        .keyboard button {
+            padding: 10px 15px;
+            font-size: 18px;
+            margin: 2px;
+            cursor: pointer;
+        }
+
+        #textInput {
+            width: 100%;
+            height: 100px;
+            font-size: 18px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .clear-btn, .switch-btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .clear-btn {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+
+        .switch-btn {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Екранна клавіатура </h1>
+
+    
+    <textarea id="textInput" placeholder="Введіть текст"></textarea>
+
+    
+    <div class="keyboard">
+        
+        <div class="keyboard-row" id="digitsRow"></div>
+        
+        <div class="keyboard-row" id="lettersRow1"></div>
+        <div class="keyboard-row" id="lettersRow2"></div>
+        <div class="keyboard-row" id="lettersRow3"></div>
+    </div>
+
+    
+    <button class="clear-btn" onclick="clearText()">Очистити поле</button>
+
+    
+    <button class="switch-btn" onclick="switchLayout()">Alt+Shift</button>
+
+    <script>
+        
+        let digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+
+        let ukrLetters = ['а', 'б', 'в', 'г', 'д', 'е', 'є', 'ж', 'з', 'и', 'і', 'ї', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ю', 'я'];
+        let engLetters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
+
+        let currentLayout = ukrLetters; 
+
+        
+        const digitsRow = document.getElementById('digitsRow');
+        const lettersRow1 = document.getElementById('lettersRow1');
+        const lettersRow2 = document.getElementById('lettersRow2');
+        const lettersRow3 = document.getElementById('lettersRow3');
+        const textInput = document.getElementById('textInput');
+
+        р
+        digits.forEach(function(digit) {
+            const button = document.createElement('button');
+            button.textContent = digit;
+            button.onclick = function() {
+                addToTextInput(digit);
+            };
+            digitsRow.appendChild(button);
+        });
+
+        
+        function renderKeyboard() {
+            lettersRow1.innerHTML = '';
+            lettersRow2.innerHTML = '';
+            lettersRow3.innerHTML = '';
+
+            let firstRow = currentLayout.slice(0, 11); 
+            let secondRow = currentLayout.slice(11, 22); 
+            let thirdRow = currentLayout.slice(22); 
+
+            firstRow.forEach(function(letter) {
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.onclick = function() {
+                    addToTextInput(letter);
+                };
+                lettersRow1.appendChild(button);
+            });
+
+            secondRow.forEach(function(letter) {
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.onclick = function() {
+                    addToTextInput(letter);
+                };
+                lettersRow2.appendChild(button);
+            });
+
+            thirdRow.forEach(function(letter) {
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.onclick = function() {
+                    addToTextInput(letter);
+                };
+                lettersRow3.appendChild(button);
+            });
+        }
+
+        
+        renderKeyboard();
+
+        
+        function switchLayout() {
+            currentLayout = (currentLayout === ukrLetters) ? engLetters : ukrLetters;
+            renderKeyboard(); 
+        }
+
+        
+        function addToTextInput(value) {
+            textInput.value += value;
+        }
+
+        
+        function clearText() {
+            textInput.value = '';
+        }
+    </script>
+
+</body>
+</html>

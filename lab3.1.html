@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Розрахунок площі трикутника</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>(Варіант 2) Розрахунок площі трикутника</h1>
+        
+        
+        <label for="base">Основа трикутника :</label>
+        <input type="text" id="base" placeholder="Введіть довжину основи">
+
+        <label for="height">Висота трикутника :</label>
+        <input type="text" id="height" placeholder="Введіть висоту трикутника">
+
+        
+        <div id="result">Площа: </div>
+    </div>
+
+    <script>
+        
+        const baseInput = document.getElementById("base");
+        const heightInput = document.getElementById("height");
+        const resultDiv = document.getElementById("result");
+
+      
+        function calculateArea() {
+            
+            const base = parseFloat(baseInput.value);
+            const height = parseFloat(heightInput.value);
+
+            
+            if (!isNaN(base) && !isNaN(height) && base > 0 && height > 0) {
+                const area = 0.5 * base * height;  
+                resultDiv.textContent = `Площа трикутника: ${area.toFixed(2)} квадратних одиниць`;
+            } else {
+                resultDiv.textContent = "Будь ласка, введіть правильні значення для основи та висоти!";
+            }
+        }
+
+        
+        baseInput.addEventListener("input", calculateArea);
+        heightInput.addEventListener("input", calculateArea);
+    </script>
+
+</body>
+</html>

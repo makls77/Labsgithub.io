@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Таблиця текстових елементів</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Таблиця текстових елементів</h1>
+  <label for="rows">Кількість рядків:</label>
+  <input type="number" id="rows" value="5"><br><br>
+  <label for="cols">Кількість стовпців:</label>
+  <input type="number" id="cols" value="5"><br><br>
+  <button onclick="createTable()">Створити таблицю</button>
+  <div id="table-container"></div>
+
+  <script>
+    function createTable() {
+      const rows = document.getElementById('rows').value;
+      const cols = document.getElementById('cols').value;
+      const tableContainer = document.getElementById('table-container');
+      const table = document.createElement('table');
+      tableContainer.innerHTML = '';
+
+      for (let i = 1; i <= rows; i++) {
+        const row = document.createElement('tr');
+        for (let j = 1; j <= cols; j++) {
+          const cell = document.createElement('td');
+          cell.textContent = `A${i}${j} = 2*${j}/${i}`;
+          row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+
+      tableContainer.appendChild(table);
+
+      
+      const variants = [
+        { func: sumElements, variants: [1, 6, 11, 16, 21, 26] },
+        { func: sumSecondRow, variants: [2, 7, 12, 17, 22, 27] },
+        { func: sumThirdCol, variants: [3, 8, 13, 18, 23, 28] },
+        { func: sumDiagonal, variants: [4, 9, 14, 19, 24] },
+        { func: multiplyLastCol, variants: [5, 10, 15, 20, 25] }
+      ];
+
+      const variant = parseInt(prompt('Введіть варіант (1-28): '));
+      const result = variants.find(v => v.variants.includes(variant)).func(table);
+      alert(`Результат для варіанту ${variant}: ${result}`);
+    }
+
+    function sumElements(table) {
+      let sum = 0;
+      for (let i = 0; i < table.rows.length; i++) {
+        for (let j = 0; j < table.rows[i].cells.length; j++) {
+          sum += parseInt(table.rows[i].cells[j].textContent.replace('A', '').replace('=', ''));
+        }
+      }
+      return sum;
+    }
+
+    function sumSecondRow(table) {
+      let sum = 0;
+      for (let j = 0; j < table.rows[1].cells.length; j++) {
+        sum += parseInt(table.rows[1].cells[j].textContent.replace('A', '').replace('=', ''));
+      }
+      return sum;
+    }
+
+    function sumThirdCol(table) {
+      let sum = 0;
+      for (let i = 0; i < table.rows.length; i++) {
+        sum += parseInt(table.rows[i].cells[2].textContent.replace('A', '').replace('=', ''));
+      }
+      return sum;
+    }
+
+    function sumDiagonal(table) {
+      let sum = 0;
+      for (let i = 0; i < table.rows.length; i++) {
+        sum += parseInt(table.rows[i].cells[i].textContent.replace('A', '').replace('=', ''));
+      }
+      return sum;
+    }
+
+    function multiplyLastCol(table) {
+      let product = 1;
+      for (let i = 0; i < table.rows.length; i++) {
+        product *= parseInt(table.rows[i].cells[table.rows[i].cells.length - 1].textContent.replace('A', '').replace('=', ''));
+      }
+      return product;
+    }
+  </script>
+</body>
+</html>

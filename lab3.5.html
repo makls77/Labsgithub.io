@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арифметичні операції</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input, button {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1></h1>
+
+    
+    <div id="task"></div>
+
+    
+    <input type="text" id="answer" placeholder="Введіть відповідь">
+
+   
+    <div>
+        <button onclick="checkAnswer()">Перевірити</button>
+        <button onclick="nextTask()">Наступне завдання</button>
+    </div>
+
+    
+    <div class="result" id="result"></div>
+
+    
+    <div class="result" id="score"></div>
+
+    <script>
+        
+        const operations = ['+', '-', '*', '/'];
+        let currentTask = {};
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+        let maxQuestions = 5;
+
+        
+        function generateTask() {
+            const num1 = Math.floor(Math.random() * 10);
+            const num2 = Math.floor(Math.random() * 10);
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+
+           
+            currentTask = {
+                num1: num1,
+                num2: num2,
+                operation: operation,
+                correctAnswer: calculateResult(num1, num2, operation)
+            };
+
+            
+            document.getElementById('task').innerText = `${num1} ${operation} ${num2} = ?`;
+            document.getElementById('answer').value = ''; 
+            document.getElementById('result').innerText = ''; 
+        }
+
+        
+        function calculateResult(num1, num2, operation) {
+            switch(operation) {
+                case '+': return num1 + num2;
+                case '-': return num1 - num2;
+                case '*': return num1 * num2;
+                case '/': return (num2 === 0 ? 0 : (num1 / num2).toFixed(2)); 
+            }
+        }
+
+        
+        function checkAnswer() {
+            const userAnswer = parseFloat(document.getElementById('answer').value);
+            if (isNaN(userAnswer)) {
+                document.getElementById('result').innerText = "Введіть числову відповідь!";
+                return;
+            }
+
+            totalQuestions++;
+            if (userAnswer === parseFloat(currentTask.correctAnswer)) {
+                correctAnswers++;
+                document.getElementById('result').innerText = "Правильно!";
+            } else {
+                document.getElementById('result').innerText = `Помилка, правильна відповідь: ${currentTask.correctAnswer}`;
+            }
+
+            updateScore();
+        }
+
+        
+        function updateScore() {
+            document.getElementById('score').innerText = `Правильних відповідей: ${correctAnswers} із ${totalQuestions}`;
+            if (totalQuestions >= maxQuestions) {
+                document.getElementById('task').innerText = "Гра завершена!";
+                document.getElementById('result').innerText = `Ваш остаточний результат: ${correctAnswers} правильних із ${totalQuestions}`;
+                document.getElementById('answer').disabled = true;
+                document.querySelector('button[onclick="checkAnswer()"]').disabled = true;
+            }
+        }
+
+        
+        function nextTask() {
+            if (totalQuestions < maxQuestions) {
+                generateTask();
+            }
+        }
+
+        
+        generateTask();
+
+    </script>
+
+</body>
+</html>

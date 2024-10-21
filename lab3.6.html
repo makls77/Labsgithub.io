@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ієрархічне дерево</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        ul {
+            list-style-type: none; 
+            padding-left: 20px;
+        }
+
+        li {
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none; 
+        }
+
+        .expandable::before {
+            content: "▶"; 
+            padding-right: 5px;
+        }
+
+        .expanded::before {
+            content: "▼"; 
+            padding-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ієрархія продуктів</h1>
+
+    
+    <ul id="tree">
+        <li class="expandable">fruits
+            <ul class="hidden">
+                <li>apple</li>
+                <li>pineapple</li>
+                <li>apricot</li>
+                <li>pear</li>
+                <li>lemon</li>
+            </ul>
+        </li>
+        <li class="expandable">vegetables
+            <ul class="hidden">
+                <li>potatoes</li>
+                <li>beetroot</li>
+                <li>carrots</li>
+                <li>pear</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        
+        let expandableItems = document.querySelectorAll('.expandable');
+
+        
+        expandableItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                
+                let subList = item.querySelector('ul');
+
+                if (subList) {
+                    
+                    if (subList.classList.contains('hidden')) {
+                        subList.classList.remove('hidden');
+                        item.classList.add('expanded'); 
+                    } else {
+                        subList.classList.add('hidden');
+                        item.classList.remove('expanded'); 
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

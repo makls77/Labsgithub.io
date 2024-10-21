@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про студента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .student-info {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .task-title {
+            font-size: 28px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Лабораторна робота 1</h1>
+    <p>Це сторінка, де відображається інформація про студента.</p>
+
+    
+    <div class="student-info" id="studentName"></div>
+
+   
+    <button onclick="showDetails()">Показати дату та місце народження</button>
+
+    
+    <h2 class="task-title">Завдання 2</h2>
+
+    
+    <button onclick="calculate()">Розрахувати F = √x / (x + z)</button>
+
+    
+    <p id="result"></p>
+
+    <script>
+        
+        const surname = "Маковійчук";
+        const name = "Михайло";
+        const middleName = "Павлович";
+
+        
+        document.getElementById("studentName").innerHTML = `Студент: ${surname} ${name} ${middleName}`;
+
+        
+        function showDetails() {
+            const birthDate = "19 серпня 2005 року";
+            const birthPlace = "м. Івано-Франківськ, Україна";
+            alert(`Дата народження: ${birthDate}\nМісце народження: ${birthPlace}`);
+        }
+
+        
+        function calculate() {
+            
+            let x = parseFloat(prompt("Введіть значення x:"));
+            let z = parseFloat(prompt("Введіть значення z:"));
+
+            
+            if (x > 0 && !isNaN(x) && !isNaN(z)) {
+                let F = Math.sqrt(x) / (x + z);  
+                document.getElementById("result").innerHTML = `Результат: F = ${F.toFixed(4)}`;  
+            } else {
+                alert("Введіть коректні числа для x та z.");  
+            }
+        }
+    </script>
+
+</body>
+</html>
