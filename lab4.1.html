@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестування</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Тестування</h1>
+
+    
+    <div class="question">
+        <p>Запитання 1: Якого кольору  небо ?</p>
+        <label><input type="radio" name="q1" value="0"> Червоний</label><br>
+        <label><input type="radio" name="q1" value="0"> Зелений</label><br>
+        <label><input type="radio" name="q1" value="1"> Синій</label><br>
+        <label><input type="radio" name="q1" value="0"> Жовтий</label>
+    </div>
+
+    >
+    <div class="question">
+        <p>Запитання 2: Якого кольору  трава?</p>
+        <label><input type="radio" name="q2" value="1"> Зелений</label><br>
+        <label><input type="radio" name="q2" value="0"> Синій</label><br>
+        <label><input type="radio" name="q2" value="0"> Червоний</label><br>
+        <label><input type="radio" name="q2" value="0"> Білий</label>
+    </div>
+
+    
+    <div class="question">
+        <p>Запитання 3: Виберіть фрукти (прапорці):</p>
+        <label><input type="checkbox" name="q3" value="1"> Яблуко</label><br>
+        <label><input type="checkbox" name="q3" value="1"> Апельсин</label><br>
+        <label><input type="checkbox" name="q3" value="0"> Картопля</label><br>
+        <label><input type="checkbox" name="q3" value="0"> Огірок</label>
+    </div>
+
+    
+    <div class="question">
+        <p>Запитання 4: Виберіть кольори, які присутні в природі:</p>
+        <label><input type="checkbox" name="q4" value="1"> Зелений</label><br>
+        <label><input type="checkbox" name="q4" value="1"> Синій</label><br>
+        <label><input type="checkbox" name="q4" value="0"> Чорний</label><br>
+        <label><input type="checkbox" name="q4" value="0"> Фіолетовий</label>
+    </div>
+
+    
+    <div class="question">
+        <p>Запитання 5: Виберіть улюблений день тижня (одинарний вибір):</p>
+        <select id="q5">
+            <option value="0">Понеділок</option>
+            <option value="0">Вівторок</option>
+            <option value="1">П'ятниця</option>
+            <option value="0">Середа</option>
+        </select>
+    </div>
+
+    
+    <div class="question">
+        <p>Запитання 6: Виберіть сезони року (множинний вибір):</p>
+        <select id="q6" multiple>
+            <option value="1">Весна</option>
+            <option value="0">Літо</option>
+            <option value="1">Осінь</option>
+            <option value="0">Зима</option>
+        </select>
+    </div>
+
+    
+    <div class="question">
+        <p>Запитання 7: Введіть результат 2 + 2:</p>
+        <input type="text" id="q7">
+    </div>
+
+    <button onclick="calculateScore()">Завершити тестування</button>
+
+    <div id="results"></div>
+
+    <script>
+        function calculateScore() {
+            let score = 0;
+            let resultsHTML = "<table><tr><th>Запитання</th><th>Ваш вибір</th><th>Бали</th></tr>";
+
+            
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q1Score = q1 ? parseInt(q1.value) : 0;
+            resultsHTML += `<tr><td>Запитання 1</td><td>${q1 ? q1.nextSibling.nodeValue : "Не обрано"}</td><td>${q1Score}</td></tr>`;
+            score += q1Score;
+
+            
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q2Score = q2 ? parseInt(q2.value) : 0;
+            resultsHTML += `<tr><td>Запитання 2</td><td>${q2 ? q2.nextSibling.nodeValue : "Не обрано"}</td><td>${q2Score}</td></tr>`;
+            score += q2Score;
+
+            
+            let q3Answers = document.querySelectorAll('input[name="q3"]:checked');
+            let q3Score = calculateCheckboxScore(q3Answers);
+            resultsHTML += `<tr><td>Запитання 3</td><td>${Array.from(q3Answers).map(a => a.nextSibling.nodeValue).join(", ")}</td><td>${q3Score}</td></tr>`;
+            score += q3Score;
+
+            
+            let q4Answers = document.querySelectorAll('input[name="q4"]:checked');
+            let q4Score = calculateCheckboxScore(q4Answers);
+            resultsHTML += `<tr><td>Запитання 4</td><td>${Array.from(q4Answers).map(a => a.nextSibling.nodeValue).join(", ")}</td><td>${q4Score}</td></tr>`;
+            score += q4Score;
+
+           
+            let q5 = document.getElementById("q5");
+            let q5Score = parseInt(q5.value);
+            resultsHTML += `<tr><td>Запитання 5</td><td>${q5.options[q5.selectedIndex].text}</td><td>${q5Score}</td></tr>`;
+            score += q5Score;
+
+            
+            let q6 = document.getElementById("q6");
+            let q6Score = calculateSelectMultipleScore(q6);
+            resultsHTML += `<tr><td>Запитання 6</td><td>${Array.from(q6.selectedOptions).map(opt => opt.text).join(", ")}</td><td>${q6Score}</td></tr>`;
+            score += q6Score;
+
+            
+            let q7 = document.getElementById("q7").value.trim();
+            let q7Score = (q7 === "4") ? 1 : 0;
+            resultsHTML += `<tr><td>Запитання 7</td><td>${q7}</td><td>${q7Score}</td></tr>`;
+            score += q7Score;
+
+            resultsHTML += `<tr><td colspan="2">Загальний бал</td><td>${score}</td></tr></table>`;
+            document.getElementById("results").innerHTML = resultsHTML;
+        }
+
+        function calculateCheckboxScore(answers) {
+            if (answers.length === 2) {
+                let correctAnswers = Array.from(answers).filter(a => parseInt(a.value) === 1).length;
+                return correctAnswers === 2 ? 2 : correctAnswers;
+            }
+            return 0;
+        }
+
+        function calculateSelectMultipleScore(select) {
+            let correctCount = Array.from(select.selectedOptions).filter(opt => parseInt(opt.value) === 1).length;
+            return (select.selectedOptions.length === 2 && correctCount === 2) ? 2 : (correctCount === 1 ? 1 : 0);
+        }
+    </script>
+</body>
+</html>
